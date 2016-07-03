@@ -1,15 +1,16 @@
 import java.awt.*;
 
 public class Kwadrat extends Figura {
-    Kwadrat() {
-        Kolor = 2;
-        wspolrzedne = new int[12][3];     // 10 kwadracikow , 2 wsp x i y w podtablicy i kolor
-        kwadraciki_do_zamazania = new int[8];
+    Kwadrat(int kkolor) {
+        Kolor = kkolor;
+        wspolrzedne = new int[25][3];     // 10 kwadracikow , 2 wsp x i y w podtablicy i kolor, informacja czy figura została osadzona w macierzy
+        kwadraciki_do_zamazania = new int[4];
+
 
 
         /*         NR  X                                Y                         KOLOR   */                           //startowe wspolrzedne obiektu na maciery glownej
 
-        wspolrzedne[0][0] = 8;          wspolrzedne[0][1] = 0;       wspolrzedne[0][2] = 3;  //kwadracik0 CZYSTY
+        /*wspolrzedne[0][0] = 8;          wspolrzedne[0][1] = 0;       wspolrzedne[0][2] = 3;  //kwadracik0 CZYSTY
         wspolrzedne[1][0] = 9;          wspolrzedne[1][1] = 0;       wspolrzedne[1][2] = 3;  //kwadracik1 CZYSTY
         wspolrzedne[2][0] = 10;         wspolrzedne[2][1] = 0;       wspolrzedne[2][2] = 3;  //kwadracik2 CZYSTY
         wspolrzedne[3][0] = 11;         wspolrzedne[3][1] = 0;       wspolrzedne[3][2] = 3;  //kwadracik0 CZYSTY
@@ -20,140 +21,58 @@ public class Kwadrat extends Figura {
         wspolrzedne[8][0] = 8;          wspolrzedne[8][1] = 2;       wspolrzedne[8][2] = 3;  //kwadracik0 CZYSTY
         wspolrzedne[9][0] = 9;          wspolrzedne[9][1] = 2;       wspolrzedne[9][2] = 2;  //kwadracik0 CZYSTY
         wspolrzedne[10][0] = 10;        wspolrzedne[10][1] =2;      wspolrzedne[10][2] = 2;  //kwadracik0 CZYSTY
-        wspolrzedne[11][0] = 11;        wspolrzedne[11][1] =2;      wspolrzedne[11][2] = 3;  //kwadracik0 CZYSTY
+        wspolrzedne[11][0] = 11;        wspolrzedne[11][1] =2;      wspolrzedne[11][2] = 3;  //kwadracik0 CZYSTY*/
 
+        int x_startowe=8;
+        int x_tmp=8,y_tmp=0;
 
-    }
-
-    @Override
-    public void zamaz(int[] ktore_kwadraciki,int jakim_Kolorem)              // podaje ktore kwadraciki wyczyscic w tablicy
-    {
-        for(int i=0;i<ktore_kwadraciki.length;i++)
+        for(int ktory_kwadrat=0;ktory_kwadrat<wspolrzedne.length;ktory_kwadrat++)                                       //tu wypelniam wszystkie kolorem tla
         {
-            wspolrzedne[ktore_kwadraciki[i]][2] = jakim_Kolorem;
 
-            if(wspolrzedne[ktore_kwadraciki[i]][0]==0)                             //zeby nie zamzywalo czerwonej ramki macierzy przy kolizji obiektu ze sciana z lewej strony
+            if(ktory_kwadrat%5==0)
             {
-                wspolrzedne[ktore_kwadraciki[i]][2] = 1;
+                x_tmp=x_startowe;
+                y_tmp++;                            //uzupelniam nastepna kolumne
             }
+            wspolrzedne[ktory_kwadrat][0]=x_tmp;
+            wspolrzedne[ktory_kwadrat][1]=y_tmp;
+            wspolrzedne[ktory_kwadrat][2]=3;
+            x_tmp++;
 
-            if(wspolrzedne[ktore_kwadraciki[i]][0]==Macierz.getSzerokosc()-1)      //tu równiez ale ze strony prawej
-            {
-                wspolrzedne[ktore_kwadraciki[i]][2] = 1;
-            }
         }
 
+        wspolrzedne[11][2]=Kolor;   //wypelniam figure kolorem zoltym
+        wspolrzedne[12][2]=Kolor;
+        wspolrzedne[16][2]=Kolor;
+        wspolrzedne[17][2]=Kolor;
+
+
     }
+
 
 
     public void ruch()
     {
-        wspolrzedne[0][1]++;       wspolrzedne[0][2] = Kolor;
-        wspolrzedne[1][1]++;       wspolrzedne[1][2] = Kolor;
-        wspolrzedne[2][1]++;       wspolrzedne[2][2] = Kolor;
-        wspolrzedne[3][1]++;       wspolrzedne[3][2] = Kolor;
-        wspolrzedne[4][1]++;       wspolrzedne[4][2] = Kolor;
-        wspolrzedne[5][1]++;       wspolrzedne[5][2] = Kolor;
-        wspolrzedne[6][1]++;       wspolrzedne[6][2] = Kolor;
-        wspolrzedne[7][1]++;       wspolrzedne[7][2] = Kolor;
-        wspolrzedne[8][1]++;       wspolrzedne[8][2] = Kolor;
-        wspolrzedne[9][1]++;       wspolrzedne[9][2] = Kolor;
-        wspolrzedne[10][1]++;      wspolrzedne[10][2] = Kolor;
-        wspolrzedne[11][1]++;      wspolrzedne[11][2] = Kolor;
+        ostatni_ruch=3;
+        for(int i=0;i<wspolrzedne.length;i++)
+        {
+            wspolrzedne[i][1]++;          //przesun na dol
+        }
 
+        kwadraciki_do_zamazania[0]=11;
+        kwadraciki_do_zamazania[1]=12;
+        kwadraciki_do_zamazania[2]=16;
+        kwadraciki_do_zamazania[3]=17;
 
-        kwadraciki_do_zamazania[0]=0;
-        kwadraciki_do_zamazania[1]=1;
-        kwadraciki_do_zamazania[2]=2;
-        kwadraciki_do_zamazania[3]=3;
-        kwadraciki_do_zamazania[4]=4;
-        kwadraciki_do_zamazania[5]=7;
-        kwadraciki_do_zamazania[6]=8;
-        kwadraciki_do_zamazania[7]=11;
+        for(int i=0;i<wspolrzedne.length;i++)
+        {
+            //if(i!=7&&i!=12&&i!=17&&i!=16)
+            wspolrzedne[i][2]=3;          //wypelnij wszystkie kolorem bialym
+        }
 
+        zamaz(kwadraciki_do_zamazania,2);        //tu wpisuje figure , niby funkcja zamaz ale tak naprawde rysuje , tez mozna jej tak uzyc
 
-        zamaz(kwadraciki_do_zamazania,3);
     }
 
 
-
-
-    public void ruch_od_strzalek(Boolean lewo,Boolean prawo,Boolean obrot,Boolean obrot_wsteczny)
-    {
-        if(lewo == true)
-        {
-
-
-           //1) przesun    lewo
-            wspolrzedne[0][0]--;          wspolrzedne[0][2] = Kolor;
-            wspolrzedne[1][0]--;          wspolrzedne[1][2] = Kolor;
-            wspolrzedne[2][0]--;          wspolrzedne[2][2] = Kolor;
-            wspolrzedne[3][0]--;          wspolrzedne[3][2] = Kolor;
-            wspolrzedne[4][0]--;          wspolrzedne[4][2] = Kolor;
-            wspolrzedne[5][0]--;          wspolrzedne[5][2] = Kolor;
-            wspolrzedne[6][0]--;          wspolrzedne[6][2] = Kolor;
-            wspolrzedne[7][0]--;          wspolrzedne[7][2] = Kolor;
-            wspolrzedne[8][0]--;          wspolrzedne[8][2] = Kolor;
-            wspolrzedne[9][0]--;          wspolrzedne[9][2] = Kolor;
-            wspolrzedne[10][0]--;         wspolrzedne[10][2] = Kolor;
-            wspolrzedne[11][0]--;         wspolrzedne[11][2] = Kolor;
-
-            //2 zamaz
-
-            kwadraciki_do_zamazania[0]=0;
-            kwadraciki_do_zamazania[1]=1;
-            kwadraciki_do_zamazania[2]=2;
-            kwadraciki_do_zamazania[3]=3;
-            kwadraciki_do_zamazania[4]=4;
-            kwadraciki_do_zamazania[5]=7;
-            kwadraciki_do_zamazania[6]=8;
-            kwadraciki_do_zamazania[7]=11;
-
-
-            zamaz(kwadraciki_do_zamazania,3);
-
-        }
-
-        if(prawo == true)
-        {
-           //1) przesun  prawo            dol
-            wspolrzedne[0][0]++;          wspolrzedne[0][2] = Kolor;
-            wspolrzedne[1][0]++;          wspolrzedne[1][2] = Kolor;
-            wspolrzedne[2][0]++;          wspolrzedne[2][2] = Kolor;
-            wspolrzedne[3][0]++;          wspolrzedne[3][2] = Kolor;
-            wspolrzedne[4][0]++;          wspolrzedne[4][2] = Kolor;
-            wspolrzedne[5][0]++;          wspolrzedne[5][2] = Kolor;
-            wspolrzedne[6][0]++;          wspolrzedne[6][2] = Kolor;
-            wspolrzedne[7][0]++;          wspolrzedne[7][2] = Kolor;
-            wspolrzedne[8][0]++;          wspolrzedne[8][2] = Kolor;
-            wspolrzedne[9][0]++;          wspolrzedne[9][2] = Kolor;
-            wspolrzedne[10][0]++;         wspolrzedne[10][2] = Kolor;
-            wspolrzedne[11][0]++;         wspolrzedne[11][2] = Kolor;
-
-            //2 zamaz
-
-            kwadraciki_do_zamazania[0]=0;
-            kwadraciki_do_zamazania[1]=1;
-            kwadraciki_do_zamazania[2]=2;
-            kwadraciki_do_zamazania[3]=3;
-            kwadraciki_do_zamazania[4]=4;
-            kwadraciki_do_zamazania[5]=7;
-            kwadraciki_do_zamazania[6]=8;
-            kwadraciki_do_zamazania[7]=11;
-
-
-            zamaz(kwadraciki_do_zamazania,3);
-        }
-
-        if(obrot==true)   //kwadrat sie nie obraca xd
-        {
-
-        }
-
-        if(obrot_wsteczny==true)
-        {
-
-        }
-
-    }
 }
